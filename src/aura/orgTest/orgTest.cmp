@@ -1,6 +1,157 @@
 <!--
  - Created by MS on 2020-04-29.
  -->
+<aura:component description="orgTest"  implements="force:appHostable,forceCommunity:availableForAllPageTypes"
+controller="OrgTest">
 
-<aura:component description="orgTest">
+<aura:attribute name="con" type="Contact" default="{'sobjectType':'Contact'}"/>
+
+    <aura:attribute name="options1" type="List" default="[
+    {'label': '동의', 'value': 'option1'}]"/>
+
+    <aura:attribute name="options2" type="List" default="[
+    {'label': '동의', 'value': 'option2'}]"/>
+
+    <aura:attribute name="value" type="List" default=""/>
+
+    <h1 class="header">[회원가입]</h1>
+
+    <lightning:recordEditForm objectApiName="Contact">
+
+        <div class="row">
+            <lightning:inputField    fieldName="LastName" value="{!v.con.LastName}"  style="width:400px;"/>
+            <lightning:inputField    fieldName="FirstName" value="{!v.con.FirstName}" style="width:400px;"/>
+            <lightning:inputField    fieldName="AccountId" value="{!v.con.AccountId}" style="width:400px;"/>
+            <lightning:inputField    fieldName="Email" value="{!v.con.Email}" style="width:400px;"/>
+
+
+<!--            <lightning:input type="password" aura:id="password" label="비밀번호" name="input" style="width:400px;"/>-->
+<!--            <lightning:input type="tel" aura:id="phone" label="휴대 전화" name="phone" style="width:300px;"  />-->
+<!--            <lightning:input type="text" aura:id="email" label="이메일(Email)" name="email" style="width:300px;"/>-->
+        </div>
+
+        <div class="row">
+            <lightning:input type="checkbox" name="Checkbox required" label="개인정보 수집 및 이용" id="checkbox1" value="checkbox-unique-id-73" required="true"/>
+            <lightning:textarea name="warning1" readonly="true" style="width:800px;" value="자사의 서비스를 이용해 주셔서 감사합니다. 본 약관은 다양한 서비스의 이용과 관련하여 본인의 개인정보 활용에 관하여 동의를 얻는 과정입니다."/>
+
+            <lightning:input type="checkbox" name="Checkbox required" label="개인정보 수집 및 이용" id="checkbox2" value="checkbox-unique-id-73" required="true"/>
+            <lightning:textarea name="warning1" readonly="true" style="width:800px;" value="자사의 서비스를 이용해 주셔서 감사합니다. 본 약관은 다양한 서비스의 이용과 관련하여 본인의 개인정보 활용에 관하여 동의를 얻는 과정입니다."/>
+        </div>
+
+<!--<div class="row">-->
+<!--    <lightning:checkboxGroup name="Checkbox required" label="개인정보 수집 및 이용" options="{!v.options1}" value="{!v.value}" required="true"/>-->
+<!--    <lightning:textarea name="warning1" readonly="true" value="자사의 서비스를 이용해 주셔서 감사합니다. 본 약관은 다양한 서비스의 이용과 관련하여 본인의 개인정보 활용에 관하여 동의를 얻는 과정입니다."/>-->
+
+<!--    <lightning:checkboxGroup name="Checkbox required2" label="개인정보 수집 및 이용" options="{!v.options2}" value="{!v.value}" required="true"/>-->
+<!--    <lightning:textarea name="warning2" readonly="true" value="자사의 서비스를 이용해 주셔서 감사합니다. 본 약관은 다양한 서비스의 이용과 관련하여 본인의 개인정보 활용에 관하여 동의를 얻는 과정입니다."/>-->
+<!--</div>-->
+
+    <lightning:button variant="brand"  label="회원가입"  title="Brand action" onclick="{!c.doCreate}" />
+    <lightning:button variant="destructive"  label="취소" title="Destructive action" onclick="{!c.doCancel}"/>
+
+    </lightning:recordEditForm>
+
+
+
+
+
+
+
+<!--    <center>-->
+<!--<head><title>Login Form</title></head>-->
+
+<!--<body>-->
+<!--<h1>[회원가입]</h1>-->
+<!--<table width="700" height="600" cellpadding="0"  align="center" style="border-style:collapse; font-size:10pt;">-->
+
+
+<!--        <tr class="register" height="30">-->
+<!--            <td width="5" align="center">*</td>-->
+<!--            <td width="15" >*회원ID</td>-->
+<!--            <td><input type="text" name="userID"/>-->
+<!--            <input type="button" value="중복확인" /></td>-->
+<!--        </tr>-->
+
+<!--        <tr height="7">-->
+<!--            <td colspan="3"><hr /></td>-->
+<!--        </tr>-->
+
+<!--        <tr class="register" height="30">-->
+<!--            <td width="5%" align="center">*</td>-->
+<!--            <td width="15%">비밀번호</td>-->
+<!--            <td><input type="password" name="password"/></td>-->
+<!--        </tr>-->
+<!--        <tr height="7">-->
+<!--            <td colspan="3"><hr /></td>-->
+<!--        </tr>-->
+
+<!--        <tr class="register" height="30">-->
+<!--            <td width="5%" align="center">*</td>-->
+<!--            <td width="15%">비밀번호 확인</td>-->
+<!--            <td><input type="password" name="repassword"/></td>-->
+<!--        </tr>-->
+
+<!--        <tr height="7">-->
+<!--            <td colspan="3"><hr /></td>-->
+<!--        </tr>-->
+
+<!--        <tr class="register" height="30">-->
+<!--            <td width="5%" align="center">*</td>-->
+<!--            <td width="15%">이름</td>-->
+<!--            <td><input type="text" name="username"/></td>-->
+<!--        </tr>-->
+<!--        <tr height="7">-->
+<!--            <td colspan="3"><hr /></td>-->
+<!--        </tr>-->
+
+
+<!--        <tr class="register" height="30">-->
+<!--            <td width="5%" align="center">*</td>-->
+<!--            <td width="15%">휴대전화</td>-->
+<!--            <td><input type="tel" name="phone"/></td>-->
+<!--        </tr>-->
+<!--        <tr height="7">-->
+<!--            <td colspan="3"><hr /></td>-->
+<!--        </tr>-->
+<!--           </table>-->
+
+<!--<table width="1000" height="600" cellpadding="0"  align="center" style="border-style:hidden; font-size:10pt;">-->
+<!--    <li class="checkBox check02">-->
+<!--    <ul class="clearfix">-->
+<!--        <li>개인정보 수집 및 이용 동의(필수)</li>-->
+<!--        <li class="checkBtn">-->
+<!--            <input type="checkbox" name="chk"/>-->
+<!--        </li>-->
+<!--    </ul>-->
+<!--    <textarea name="" id="" cols="40" rows="7">-->
+<!--자사의 서비스를 이용해 주셔서 감사합니다. 본 약관은 다양한 서비스의 이용과 관련하여 본인의 개인정보 활용에 관하여 동의를 얻는 과정입니다.-->
+<!--       </textarea>-->
+
+<!--</li>-->
+
+<!--    <li class="checkBox check02">-->
+<!--        <ul class="clearfix">-->
+<!--            <li>개인정보 수집 및 이용 동의(필b수)</li>-->
+<!--            <li class="checkBtn">-->
+<!--                <input type="checkbox" name="chk"/>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--        <textarea name="" id="" cols="40" rows="7" >-->
+<!--자사의 서비스를 이용해 주셔서 감사합니다. 본 약관은 다양한 서비스의 이용과 관련하여 본인의 개인정보 활용에 관하여 동의를 얻는 과정입니다.-->
+<!--       </textarea>-->
+<!--    </li>-->
+<!--    <tr height="7">-->
+<!--        <td colspan="3"><hr /></td>-->
+<!--    </tr>-->
+
+<!--    <div id="btn_group">-->
+<!--        <button id="btn1" onclick="{!c.doSave}">회원가입</button>-->
+<!--        <button id="btn2" onclick="{!c.doCancel}">취소</button>-->
+<!--    </div>-->
+
+
+<!--</table>-->
+<!--</body>-->
+
+<!--</center>-->
 </aura:component>
