@@ -4,7 +4,8 @@
     <option name="connections">
       <list>
         <IlluminatedCloudConnection>
-          <option name="connectionName" value="SeongWon Org" />
+          <option name="connectionName" value="SeongWon org" />
+          <option name="connectionType" value="MDAPI" />
           <option name="defaultModuleName" value="SeongWon Org1" />
           <option name="offlineSymbolTablePath" value="$PROJECT_DIR$/IlluminatedCloud/SeongWon_Org/OfflineSymbolTable.zip" />
         </IlluminatedCloudConnection>

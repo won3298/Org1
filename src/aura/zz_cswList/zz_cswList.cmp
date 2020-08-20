@@ -1,0 +1,70 @@
+<!--
+  * @filename      : zz_cswList
+  * @projectname   :
+  * @author        : CHOI SEONGWON
+  * @date          : 2020-08-11 오후 1:11
+  * @group         :
+  * @group-content :
+  * @description   :
+  * @reference     :
+  * @copyright     : Copyright © I2max. All Rights Reserved.
+  * ===============================================================
+  * ver     date          author             description
+  * ===============================================================a
+    0.1         Choi SeongWon           Create
+ -->
+<aura:component extends="c:exmBase"
+                implements="force:appHostable,forceCommunity:availableForAllPageTypes"
+                controller="ZZ_cswList">
+
+
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="tableEvent" event="c:lacComTableEvent" action="{!c.util_Move}"/>
+    <aura:attribute name="labelMap" type="Map" description=""/>
+    <aura:attribute name="options" type="List" default="[
+        {'label':'0~6', 'value' : '1'},
+        {'label':'7~35', 'value' : '2'},
+        {'label':'35~1000', 'value' : '3'},
+    ]"/>
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    <c:laccomService aura:id="lacComService"/>
+
+
+        <!--상단 검색  -->
+    <c:lacComBody>
+        <aura:set attribute="searchSection">
+        <c:lacComSearchBar>
+        <lightning:recordEditForm objectApiName="Case">
+            <label>상태</label>
+            <lightning:inputField aura:id="status" fieldName="Status"  value="{!v.reqData.status}"/>
+        </lightning:recordEditForm>
+            <lightning:combobox label="검색조건"  options="{!v.options}"  value="{!v.reqData.numberoflocations}" />
+        <lightning:input aura:id="accountName" label="계정명" type="text" value="{!v.reqData.accountName}"/>
+        <lightning:button label="search" variant="brand" onclick="{!c.doSearch}" />
+        </c:lacComSearchBar>
+        </aura:set>
+    </c:lacComBody>
+
+    <c:lacComTableFrame aura:id="table" isPaging="{!true}" simple="{!true}" isCommunity="{#v.isCommunity}">
+        <c:lacComTable aura:id="dataTable" style="width:100%" hasScroll="true" left="1" fixedHeader="{!true}" scrollHeight="height:300px">
+            <thead>
+                <c:lacComTh title="{!v.labelMap.Account.name}">계정명</c:lacComTh>
+                <c:lacComTh title="{!v.labelMap.status}">상태</c:lacComTh>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.recordList}" var="record" indexVar="idx">
+                    <tr>
+                    <c:lacComTd title="{!record.Account.Name}">
+                        <a data-recordid="{!record.Id}" onclick="{!c.doNaviService}">{!record.Account.Name}</a>
+                    </c:lacComTd>
+                    <c:lacComTd title="{!record.Status}">{!record.Status}</c:lacComTd>
+                    </tr>
+                </aura:iteration>
+
+            </tbody>
+        </c:lacComTable>
+    </c:lacComTableFrame>
+
+</aura:component>
