@@ -1,128 +1,6 @@
 /**
  * Created by MS on 2020-04-29.
- *//*
-
-({
-
-    apex: function(component, actionName, method, params, localSpinner, isNotWorkSpinner) {
-            const self = this;
-            //-------------------------------------------------------------
-            // $A.getCallback 처리를 하여 속도 개선 : 중요
-            //-------------------------------------------------------------
-
-            return new Promise($A.getCallback(function (resolve, reject) {
-
-                self.gfn_log(component, actionName + ' -> ' + method +'(server)' , {'params': params});
-
-                const action = component.get("c." + method);
-
-                if($A.util.isEmpty(params) === false) {
-                    action.setParams(params);
-                }
-
-                // 일단 임시로 세팅
-                //action.setBackground();
-
-                //-------------------------------------------------------------
-                // Apex Server Call
-                //-------------------------------------------------------------
-                action.setCallback(this, (response) => {
-
-                    if($A.util.isEmpty(isNotWorkSpinner) || !isNotWorkSpinner) {
-                        self.gfn_hideSpinner(component, localSpinner);
-                    }
-
-                    const state = response.getState();
-
-    //
-                    if (state === "SUCCESS") {
-                        let resData = response.getReturnValue();
-                        self.gfn_log(component, method + '(server) -> ' + actionName , {'resData': resData});
-                        resolve(resData, response);
-                    }
-                    else if (state === "INCOMPLETE") {
-                        // do something
-                    }
-                    else if (state === "ERROR") {
-                        const errors = response.getError();
-
-                        console.error(errors);
-
-                        if (    ($A.util.isEmpty(errors) === false)
-                            &&  ($A.util.isEmpty(errors[0]) === false)  ) {
-
-                            let errorMessage;
-
-                            //-------------------------------------------------------------
-                            // 에러처리는 기본적으로 errors의 0 index만 노출
-                            //-------------------------------------------------------------
-
-                            //----------------------------------------------------
-                            // basic error
-                            //----------------------------------------------------
-                            if ($A.util.isEmpty(errors[0].message) === false){
-                                errorMessage = errors[0].message;
-                            }
-                                //----------------------------------------------------
-                                // page error
-                            //----------------------------------------------------
-                            else if ($A.util.isEmpty(errors[0].pageErrors[0]) === false){
-                                errorMessage = errors[0].pageErrors[0].message;
-                            }
-                                //----------------------------------------------------
-                                // field error
-                            //----------------------------------------------------
-                            else if ($A.util.isEmpty(errors[0].fieldErrors) === false){
-                                for(let fieldError in errors[0].fieldErrors) {
-                                    let thisFieldError = errors[0].fieldErrors[fieldError];
-                                    errorMessage = thisFieldError[0].message;
-                                }
-                            }
-                            //----------------------------------------------------
-                            // duplication error
-                            //----------------------------------------------------
-
-                            //----------------------------------------------------
-                            // 공통 처리
-                            //----------------------------------------------------
-                            self.gfn_log(component, method + '(server) -> '+actionName , {'error' : errorMessage});
-                            reject(errorMessage, response);
-                        }
-                        else{
-                            console.error("Unknown error");
-                            reject("Unknown error", response);
-                        }
-                    }
-                });
-
-                if($A.util.isEmpty(isNotWorkSpinner) || !isNotWorkSpinner) {
-                    self.gfn_showSpinner(component, localSpinner);
-                }
-
-                $A.enqueueAction(action);
-            }));
-        },
-        gfn_toast : function(msg, type, mode){
-                const toastEvent = $A.get("e.force:showToast");
-                $A.get("e.force:showToast").setParams({
-                    "mode" : $A.util.isEmpty(mode) ? 'dismissible' : mode,
-                    "message": msg,
-                    "type": type === 's' ? 'success' : (type === 'w' ? 'warning' : 'error')
-                }).fire();
-            },
-            gfn_refresh : function(){
-                    $A.get('e.force:refreshView').fire();
-                },
-                gfn_ApexErrorHandle : function(error) {
-                        //this.gfn_toast('System Error.', 'e');
-                        this.gfn_toast(error, 'e');
-                    },
-                   gfn_closeQuickAction: function(){
-                           $A.get("e.force:closeQuickAction").fire();
-                       }
-
-})*/
-
+ */
 ({
     /* =============================================================================
     === 기본 Global 변수
@@ -834,5 +712,7 @@
      */
     gfn_isIEBrowser :function() {
         return this.gfn_checkBrowser().startsWith("IE");
-    }
+    },
+
+    lacComBase : null
 })
