@@ -1,0 +1,90 @@
+<!--
+  * @filename      : zz_TestList
+  * @projectname   :
+  * @author        : CHOI SEONGWON
+  * @date          : 2020-08-18 오후 3:20
+  * @group         :
+  * @group-content :
+  * @description   :
+  * @reference     :
+  * @copyright     : Copyright © I2max. All Rights Reserved.
+  * ===============================================================
+  * ver     date          author             description
+  * ===============================================================a
+    0.1         Choi SeongWon           Create
+ -->
+
+<aura:component   extends="c:exmBase"
+                  implements="force:appHostable, forceCommunity:availableForAllPageTypes"
+                  controller="ZZ_TestList">
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="tableEvent" event="c:lacComTableEvent" action="{!c.util_Move}"/>
+    <aura:attribute name="labelMap" type="Map" description=""/>
+    <aura:attribute name="options" type="List" default="[
+        {'label':'Description', 'value' : '1'},
+        {'label':'Tab Test', 'value' : '2'},
+        {'label':'BillingStreet', 'value' : '3'},
+    ]"/>
+
+    <aura:attribute name="seriesOptions" type="List" description=""/>
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    <c:lacComService aura:id="lacComService"/>
+
+    <!-- 상단 검색영역 -->
+    <c:lacComBody>
+        <aura:set attribute="searchSection">
+            <c:lacComSearchBar>
+                <lightning:combobox label="검색 조건" options="{!v.options}" value="{!v.reqData.searchType}" onchange="{!c.doSearch}" />
+            </c:lacComSearchBar>
+        </aura:set>
+    </c:lacComBody>
+
+
+    <c:lacComTableFrame aura:id="table" isPaging="{!notequals(v.reqData.searchType,'2')}" simple="{!true}" isCommunity="{#v.isCommunity}" >
+        <c:lacComTable aura:id="dataTable" hasScroll="true" left="1" fixedHeader="{!true}">
+
+            <aura:if isTrue="{!equals(v.reqData.searchType, '1')}">
+                <aura:iteration items="{!v.recordList}" var="record" indexVar="idx">
+                    <tr>
+                        <c:lacComTd title="{!record.Description}">{!record.Description}</c:lacComTd>
+                    </tr>
+                </aura:iteration>
+            </aura:if>
+
+            <aura:if isTrue="{!equals(v.reqData.searchType,'2')}">
+                <lightning:combobox label=""
+                                    placeholder="Level"
+                                    options="{!v.seriesOptions}"
+                                    variant="label-hidden"
+                                    value="{!v.reqData.levelLevel}"
+                                    onchange="{!c.doSearchChange}"/>
+
+                <lightning:tabset selectedTabId="two">
+                    <lightning:tab label="a" id="one">
+                        <c:zz_cswList />
+                    </lightning:tab>
+
+                    <lightning:tab label="b" id="two">
+                        <c:tabtwo />
+                    </lightning:tab>
+                </lightning:tabset>
+            </aura:if>
+
+            <aura:if isTrue="{!equals(v.reqData.searchType, '3')}">
+                <tbody>
+                <aura:iteration items="{!v.recordList}" var="record" indexVar="idx">
+                    <tr>
+                        <c:lacComTd title="{!record.BillingStreet}">{!record.BillingStreet}</c:lacComTd>
+                        <c:lacComTd title="{!record.Name}">{!record.Name}</c:lacComTd>
+                    </tr>
+                </aura:iteration>
+                </tbody>
+            </aura:if>
+
+        </c:lacComTable>
+    </c:lacComTableFrame>
+
+
+</aura:component>
