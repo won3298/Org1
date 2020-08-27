@@ -16,30 +16,38 @@
   0.1                            Create
  */
 public with sharing class ZZ_TestList {
-    public class InitData extends I2ComClass.InitData{
-        @AuraEnabled
-        public List<I2ComClass.Option> getOptions{
-            get{
-                if(this.getOptions == null){
-                    this.getOptions = I2ComUtil.makePickListOptions('Contact','Level__c',false,true);
-                }
-                return this.getOptions;
-            }
-            set;
-        }
+
+//    public class InitData extends I2ComClass.InitData{
+//        @AuraEnabled
+//        public List<I2ComClass.Option> getOptions{
+//            get{
+//                if(this.getOptions == null){
+//                    this.getOptions = I2ComUtil.makePickListOptions('Contact','Level__c',false,true);
+//                }
+//                return this.getOptions;
+//            }
+//            set;
+//        }
+//    }
+
+    @AuraEnabled(Cacheable=true)
+    public static List<I2ComClass.Option> getOptions() {
+        return I2ComUtil.makePickListOptions('Contact', 'Level__c', false, true);
     }
 
 
 
-    @AuraEnabled
-    public static I2ComClass.InitData init(){
-        InitData initData = new InitData();
-        return initData;
-    }
+//    @AuraEnabled
+//    public static I2ComClass.InitData init(){
+//        InitData initData = new InitData();
+//        return initData;
+//    }
 
     @AuraEnabled
     public static I2ComClass.ResData search(String reqData, Integer pageSize, Integer pageNumber){
         String whereClause = '';
+//        Map<String, String> paramMap = I2ComHelper.gfnCheckCondition(reqData);
+
 
         whereClause = I2ComHelper.gfnRefinecondition(whereClause);
 
@@ -52,6 +60,13 @@ public with sharing class ZZ_TestList {
                 pageNumber
         );
         return resData;
+    }
+    public static void sObjectsInsert(){
+        Account store = new Account();
+        store.Name = 'The Tea Factory';
+        store.AccountNumber = '356281';
+        store.Phone = '555-0158';
+        insert store;
     }
 
 }

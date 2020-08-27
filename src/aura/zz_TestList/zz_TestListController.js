@@ -16,23 +16,19 @@
 ({
     doInit : function(component, event, helper){
             helper.lacComService = component.find('lacComService');
-
-           helper.lacComService.doGetSobjectData(['Account'], function(resData){
-                          component.set('v.labelMap',resData);
-                      });
-
 //            helper.fn_initSearch(component);
+            $A.enqueueAction(component.get('c.doSearch'));
 
-            helper.apex(
-                component, 'doInit','init', null
-            ).then(function(resData,response){
-                component.set('v.initData',resData);
 
-                $A.enqueueAction(component.get('c.doSearch'));
-            }).catch(function(error, response){
-                helper.gfn_ApexErrorHandle(error, response);
-            });
-
+//            helper.apex(
+//                component, 'doInit','init', null
+//            ).then(function(resData,response){
+//                component.set('v.initData',resData);
+//                $A.enqueueAction(component.get('c.doSearch'));
+//                helper.fn_initSearch(component);
+//            }).catch(function(error, response){
+//                helper.gfn_ApexErrorHandle(error, response);
+ //            });
 
     },
 
@@ -45,6 +41,16 @@
                        }).catch(function (error) {
                        helper.gfn_ApexErrorHandle(error);
                    });
+
+                   if(component.get('v.reqData.searchType')==='2'){
+                       helper.apex(
+                           component, 'doInit', 'getOptions',null
+                       ).then(function({resData,response}){
+                           component.set('v.seriesOptions',resData);
+                       }).catch(function({error, response}){
+                          helper.gfn_ApexErrorHandle(error, response);
+                       });
+                   }
         },
 
         doChange : function(component, event, helper){
