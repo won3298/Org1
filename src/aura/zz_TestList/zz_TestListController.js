@@ -19,17 +19,6 @@
 //            helper.fn_initSearch(component);
             $A.enqueueAction(component.get('c.doSearch'));
 
-
-//            helper.apex(
-//                component, 'doInit','init', null
-//            ).then(function(resData,response){
-//                component.set('v.initData',resData);
-//                $A.enqueueAction(component.get('c.doSearch'));
-//                helper.fn_initSearch(component);
-//            }).catch(function(error, response){
-//                helper.gfn_ApexErrorHandle(error, response);
- //            });
-
     },
 
     doSearch : function(component, event, helper){
@@ -42,14 +31,26 @@
                        helper.gfn_ApexErrorHandle(error);
                    });
 
+                    //makepicklistopion 사용 시.
+//                   if(component.get('v.reqData.searchType')==='2'){
+//                       helper.apex(
+//                           component, 'doInit', 'getAccountName',null
+//                       ).then(function({resData,response}){
+//                           component.set('v.seriesOptions',resData);
+//                       }).catch(function({error, response}){
+//                          helper.gfn_ApexErrorHandle(error, response);
+//                      });
+//                   }
                    if(component.get('v.reqData.searchType')==='2'){
                        helper.apex(
-                           component, 'doInit', 'getOptions',null
+                           component, 'doInit', 'getAccountName',{
+                               'AccountName' : component.get('v.reqData.step1')
+                           }
                        ).then(function({resData,response}){
                            component.set('v.seriesOptions',resData);
                        }).catch(function({error, response}){
                           helper.gfn_ApexErrorHandle(error, response);
-                       });
+                      });
                    }
         },
 

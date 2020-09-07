@@ -18,7 +18,6 @@
         helper.lacComService = component.find('lacComService');
 
        helper.lacComService.doGetSobjectData(['Account', 'Case'], function(resData){
-
                       component.set('v.labelMap',resData);
                   });
 
@@ -56,7 +55,8 @@
                      "recordId": recordId,
                      "objectApiName": "Account",
                      "actionName": "view"
-                 }
-             });
+                        }
+                                });
+
          },
 });

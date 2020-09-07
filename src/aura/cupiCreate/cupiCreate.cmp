@@ -1,0 +1,85 @@
+<!--
+  * @filename      : cupiCreate
+  * @projectname   :
+  * @author        : CHOI SEONGWON
+  * @date          : 2020-09-02 오후 5:12
+  * @group         :
+  * @group-content :
+  * @description   :
+  * @reference     :
+  * @copyright     : Copyright © I2max. All Rights Reserved.
+  * ===============================================================
+  * ver     date          author             description
+  * ===============================================================a
+    0.1         Choi SeongWon           Create
+ -->
+<aura:component  extends="c:exmBase"
+                 implements="force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader"
+                 controller="CupiCreate">
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <aura:attribute name="wrapperData" type="CupiCreate.WrapperData"/>
+    <aura:attribute name="openSection" type="List" default="['고객','동의']" />
+
+    <aura:attribute name="prefixPhoneNumber" type="List" description="휴대폰 앞자리 고정번호"/>
+    <aura:attribute name="phoneNumber" type="List" description="휴대폰 번호"/>
+
+    <aura:attribute name="isAllSelected" type="Boolean" default="false"/>
+
+
+
+    <c:lacComQuickAction title="고객 정보" aura:id="quickAction" hasSelfFooter="{!false}">
+    <lightning:accordion aura:id="accordion" allowMultipleSectionsOpen="true" activeSectionName="{!v.openSection}">
+        <lightning:accordionSection name="고객" label="고객 정보">
+            <lightning:layout>
+                <lightning:layoutItem class="slds-col slds-size_1-of-12 slds-align-middle slds-text-align_left">이름:</lightning:layoutItem>
+                <lightning:layoutItem class="slds-col slds-size_2-of-12 slds-align-middle slds-text-align_left">{!v.wrapperData.contact.FirstName}&nbsp;{!v.wrapperData.contact.LastName} </lightning:layoutItem>
+            </lightning:layout>
+
+            <lightning:layout>
+                <lightning:layoutItem class="slds-col slds-size_1-of-12 slds-align-middle slds-text-align_left">번호:</lightning:layoutItem>
+<!--                <lightning:combobox label="" options="{!v.prefixPhoneNumber}"  value="{!v.phoneNumber[0]}" placeholder="선택"/>-->
+                <lightning:input label=""  type="text" value="{!v.phoneNumber[0]}"/>
+                <lightning:input label=""  type="text" value="{!v.phoneNumber[1]}"/>
+                <lightning:input label=""  type="text" value="{!v.phoneNumber[2]}"/>
+            </lightning:layout>
+        </lightning:accordionSection>
+
+        <lightning:recordEditForm objectApiName="Contact">
+        <lightning:accordionSection name="동의" label="정보 제공 동의">
+            <lightning:layout>
+                <lightning:input type="checkbox" label= "전체 동의" value="{!v.isAllSelected}" onchange="{!c.onSelectAllChange}"/>
+            </lightning:layout>
+
+            <lightning:layout>
+                <lightning:layoutItem class="slds-col slds-size_3-of-12 slds-align-middle slds-text-align_left"><label>개인정보 활용 동의 여부</label></lightning:layoutItem>
+                <lightning:layoutItem class="slds-col slds-size_2-of-12 slds-align-middle slds-text-align_center">
+                    <lightning:input aura:id="myCheckboxes" name="chk" type="checkbox" label="동의" checked="{!v.wrapperData.contact.IsCUPI__c}" value="{!v.wrapperData.contact.IsCUPI__c}" onchange="{!c.doChange}"/>
+                </lightning:layoutItem>
+                <lightning:layoutItem class="slds-col slds-size_2-of-12 slds-align-middle slds-text-align_center">
+                    <lightning:input aura:id="IsCUPI__c" type="checkbox" label="비동의" checked="{!not(v.wrapperData.contact.IsCUPI__c)}" value="{!not(v.wrapperData.contact.IsCUPI__c)}" onchange="{!c.doChange}"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+
+            <lightning:layout>
+                <lightning:layoutItem class="slds-col slds-size_3-of-12 slds-align-middle slds-text-align_left"><label>서비스 이용약관 동의</label></lightning:layoutItem>
+                <lightning:layoutItem class="slds-col slds-size_2-of-12 slds-align-middle slds-text-align_center">
+                    <lightning:input aura:id="myCheckboxes" name="chk" type="checkbox" label="동의" checked="{!v.wrapperData.contact.IsCUPI2__c}" value="{!v.wrapperData.contact.IsCUPI2__c}" onchange="{!c.doChange}"/>
+                </lightning:layoutItem>
+                <lightning:layoutItem class="slds-col slds-size_2-of-12 slds-align-middle slds-text-align_center">
+                    <lightning:input aura:id="IsCUPI2__c" type="checkbox" label="비동의" checked="{!not(v.wrapperData.contact.IsCUPI2__c)}" value="{!not(v.wrapperData.contact.IsCUPI2__c)}" onchange="{!c.doChange}"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+
+
+        </lightning:accordionSection>
+        </lightning:recordEditForm>
+    </lightning:accordion>
+
+        <aura:set attribute="footer" >
+            <lightning:button label="저장" onclick="{!c.doSave}"/>
+        </aura:set>
+    </c:lacComQuickAction>
+</aura:component>

@@ -17,8 +17,6 @@
                 implements="force:appHostable,forceCommunity:availableForAllPageTypes"
                 controller="ZZ_cswList">
 
-
-
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:handler name="tableEvent" event="c:lacComTableEvent" action="{!c.util_Move}"/>
     <aura:attribute name="labelMap" type="Map" description=""/>
@@ -31,16 +29,16 @@
     <lightning:overlayLibrary aura:id="overlayLib"/>
     <c:laccomService aura:id="lacComService"/>
 
-
         <!--상단 검색  -->
     <c:lacComBody>
         <aura:set attribute="searchSection">
-        <c:lacComSearchBar>
-        <lightning:recordEditForm objectApiName="Case">
-            <label>상태</label>
-            <lightning:inputField aura:id="status" fieldName="Status"  value="{!v.reqData.status}"/>
+            <c:lacComSearchBar>
+                <lightning:recordEditForm objectApiName="Case">
+            <label>상태</label>&nbsp;
+            <lightning:inputField aura:id="Status" fieldName="Status" variant="label-hidden" value="{!v.reqData.status}"/>
         </lightning:recordEditForm>
-            <lightning:combobox label="검색조건"  options="{!v.options}"  value="{!v.reqData.numberoflocations}" />
+
+            <lightning:combobox label="조건"  options="{!v.options}"  value="{!v.reqData.numberoflocations}" />
         <lightning:input aura:id="accountName" label="계정명" type="text" value="{!v.reqData.accountName}"/>
         <lightning:button label="search" variant="brand" onclick="{!c.doSearch}" />
         </c:lacComSearchBar>

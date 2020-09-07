@@ -15,7 +15,7 @@
  -->
 
 <aura:component   extends="c:exmBase"
-                  implements="force:appHostable, forceCommunity:availableForAllPageTypes"
+                  implements="force:appHostable,forceCommunity:availableForAllPageTypes"
                   controller="ZZ_TestList">
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
@@ -28,38 +28,62 @@
     ]"/>
 
     <aura:attribute name="seriesOptions" type="List" description=""/>
+    <aura:attribute name="seriesOptions1" type="List" description=""/>
+    <aura:attribute name="seriesOptions2" type="List" description=""/>
+
+    <aura:attribute name="accountId" type="String" description=""/>
 
     <lightning:overlayLibrary aura:id="overlayLib"/>
-    <c:lacComService aura:id="lacComService"/>
+    <c:laccomService aura:id="lacComService"/>
 
     <!-- 상단 검색영역 -->
     <c:lacComBody>
         <aura:set attribute="searchSection">
             <c:lacComSearchBar>
                 <lightning:combobox label="검색 조건" options="{!v.options}" value="{!v.reqData.searchType}" onchange="{!c.doSearch}" />
+                <lightning:inputField label="잠시 테스트" fieldName="AccountId" value="{!v.accountId}"/>
             </c:lacComSearchBar>
         </aura:set>
     </c:lacComBody>
 
+    <c:lacComTableFrame aura:id="table" isPaging="{!or(equals(v.reqData.searchType,'1'),equals(v.reqData.searchType,'3'))}" simple="{!true}" isCommunity="{#v.isCommunity}">
 
-    <c:lacComTableFrame aura:id="table" isPaging="{!notequals(v.reqData.searchType,'2')}" simple="{!true}" isCommunity="{#v.isCommunity}" >
+<!--    <c:lacComTableFrame aura:id="table" isPaging="{!notequals(v.reqData.searchType,'2')}" simple="{!true}" isCommunity="{#v.isCommunity}" >-->
         <c:lacComTable aura:id="dataTable" hasScroll="true" left="1" fixedHeader="{!true}">
 
             <aura:if isTrue="{!equals(v.reqData.searchType, '1')}">
                 <aura:iteration items="{!v.recordList}" var="record" indexVar="idx">
                     <tr>
-                        <c:lacComTd title="{!record.Description}">{!record.Description}</c:lacComTd>
+<!--                        <c:lacComTd title="{!record.Description}">{!record.Description}</c:lacComTd>-->
+                        <c:lacComTd title="{!record.Description}">
+                            <a data-recordid="{!record.Id}" onclick="{!c.doNaviService}">{!record.Description}</a>
+                        </c:lacComTd>
                     </tr>
                 </aura:iteration>
             </aura:if>
 
             <aura:if isTrue="{!equals(v.reqData.searchType,'2')}">
                 <lightning:combobox label=""
-                                    placeholder="Level"
+                                    placeholder="기업"
                                     options="{!v.seriesOptions}"
                                     variant="label-hidden"
-                                    value="{!v.reqData.levelLevel}"
+                                    value="{!v.reqData.step1}"
+                                    onchange="{!c.doSeriesChange}"/>
+
+                <lightning:combobox label=""
+                                    placeholder="제품"
+                                    options="{!v.seriesOptions1}"
+                                    variant="label-hidden"
+                                    value="{!v.reqData.step2}"
                                     onchange="{!c.doSearchChange}"/>
+
+                <lightning:combobox label=""
+                                    placeholder="제품명"
+                                    options="{!v.seriesOptions2}"
+                                    variant="label-hidden"
+                                    value="{!v.reqData.step3}"/>
+
+
 
                 <lightning:tabset selectedTabId="two">
                     <lightning:tab label="a" id="one">

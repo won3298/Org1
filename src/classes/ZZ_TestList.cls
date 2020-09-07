@@ -30,9 +30,26 @@ public with sharing class ZZ_TestList {
 //        }
 //    }
 
+//    @AuraEnabled(Cacheable=true)
+//    public static List<I2ComClass.Option> getOptions() {
+//        return I2ComUtil.makePickListOptions('Contact', 'Level__c', false, true);
+//    }
+
+    //기업명 구함
     @AuraEnabled(Cacheable=true)
-    public static List<I2ComClass.Option> getOptions() {
-        return I2ComUtil.makePickListOptions('Contact', 'Level__c', false, true);
+    public static List<I2ComClass.Option> getAccountName() {
+        return I2ComUtil.makePickListOptions('Account', 'AccountName__c', false, true);
+    }
+    //기업의 제품을 구함
+    @AuraEnabled(Cacheable=true)
+    public static List<I2ComClass.Option> getProduct(final String accountname) {
+         return I2ComDependencyUtil.getDependentPickListOptions('Account', 'AccountName__c','Product__c', accountname,true, true);
+    }
+
+    //제품의 제품명을 구함
+    @AuraEnabled(Cacheable=true)
+    public static List<I2ComClass.Option> getProductName(final String productname) {
+        return I2ComDependencyUtil.getDependentPickListOptions('Account', 'Product__c','ProductName__c', productname,true, true);
     }
 
 
@@ -52,7 +69,7 @@ public with sharing class ZZ_TestList {
         whereClause = I2ComHelper.gfnRefinecondition(whereClause);
 
         I2ComClass.ResData resData = I2ComHelper.gfnQuery(
-                'Description,BillingStreet,Name',
+                'Id, Description, BillingStreet, Name',
                 'Account',
                 whereClause,
                 null,

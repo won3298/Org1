@@ -1,0 +1,60 @@
+<!--
+  * @filename      : zz_addInformation
+  * @projectname   :
+  * @author        : CHOI SEONGWON
+  * @date          : 2020-08-28 오후 1:17
+  * @group         :
+  * @group-content :
+  * @description   :
+  * @reference     :
+  * @copyright     : Copyright © I2max. All Rights Reserved.
+  * ===============================================================
+  * ver     date          author             description
+  * ===============================================================a
+    0.1         Choi SeongWon           Create
+ -->
+<aura:component  extends="c:exmBase"
+                 controller="ZZ_addInformation"
+                 implements="force:appHostable,forceCommunity:availableForAllPageTypes,lightning:isUrlAddressable,force:hasRecordId">
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:attribute name="contactId" type="String"/>
+
+    <aura:attribute name="initData" type="ZZ_addInformation.InitData" description=""/>
+<!--    <aura:attribute name="initData2" type="ZZ_addInformation.InitData" description=""/>-->
+
+    <aura:attribute name="datalist" type="Map" description=""/>
+
+    <c:laccomService aura:id="lacComService"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+
+    <c:lacComQuickAction title="Contact 정보 입력" aura:id="quickAction" hasSelfFooter="{!false}" isSmall="{!true}">
+<!--        <c:lacComSectionFrame hasHeader="true" title="Section Sample">-->
+            <lightning:recordEditForm objectApiName="Contact">
+                <div class="slds-modal_content">
+                    <div class="slds-list_horizontal slds-p-around_xx-small">
+                         <lightning:input type="text" label="Name" class="slds-size_1-of-2 left-side" value="{!v.initData.contact.LastName}" disabled="true"/>
+                         <lightning:input type="text" label="Department" class="slds-size_1-of-2 left-side" value="{!v.initData.contact.Department}"  disabled="{!empty(v.initData.contact.Department)?false:v.initData.contact.Department}"/>
+                    </div>
+                </div>
+                <div class="slds-modal_content">
+                    <div class="slds-list_horizontal slds-p-around_xx-small">
+                        <lightning:input type="text" label="Phone" class="slds-size_1-of-2 left-side" value="{!v.initData.contact.Phone}"/>
+                        <lightning:input type="text" label="Email" class="slds-size_1-of-2 left-side" value="{!v.initData.contact.Email}"/>
+                    </div>
+                </div>
+                <div class="slds-modal_content">
+                    <div class="slds-list_horizontal slds-p-around_xx-small">
+                        <lightning:input type="text" label="Language" class="slds-size_1-of-2 left-side" value="{!v.initData.contact.Languages__c}"  />
+                        <lightning:input type="text" label="Level" class="slds-size_1-of-2 left-side" value="{!v.initData.contact.Level__c}"/>
+                    </div>
+                </div>
+            </lightning:recordEditForm>
+<!--        </c:lacComSectionFrame>-->
+        <aura:set attribute="footer">
+        <lightning:button label="저장" onclick="{!c.doSave}" variant="brand"/>
+        </aura:set>
+    </c:lacComQuickAction>
+</aura:component>

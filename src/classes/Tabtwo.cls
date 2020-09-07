@@ -32,7 +32,7 @@ public with sharing class Tabtwo {
         whereClause = I2ComHelper.gfnRefineCondition(whereClause);
 
         I2ComClass.ResData resData = I2ComHelper.gfnQuery(
-                'Id,Name',
+                'Id, Name, Department',
                 'Contact',
                 whereClause,
                 null,
